@@ -12,9 +12,9 @@ pipeline {
         
     }
 
-    tools {
-        nodejs 'nodejs20'
-    }
+  //  tools {
+   //     nodejs 'nodejs20'
+  //  }
 
   //  stages {
       //  stage('Build') {
