@@ -1,0 +1,13 @@
+.login-image-container {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50%;
+    margin-left: 5%;
+  }
+  
+  .login-image {
+ 
+  }
+  
