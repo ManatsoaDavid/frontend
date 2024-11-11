@@ -1,4 +1,4 @@
-def COLOR_MAP = [
+ def COLOR_MAP = [
             'SUCCESS': 'good',
             'FAILURE': 'danger'
         ]
@@ -9,26 +9,26 @@ pipeline {
         registry = "manatsoadavid/front" // Nom de l'image Docker
         registryCredential = 'dockerhub' // ID des credentials Docker Hub dans Jenkins
         scannerHome = tool 'sonar4.7' // Configurez le scanner SonarQube dans Jenkins
-        
+       
     }
 
-  //  tools {
-   //     nodejs 'nodejs20'
-  //  }
+    tools {
+        nodejs 'nodejs20'
+    }
 
-  //  stages {
-      //  stage('Build') {
-        //    steps {
-         //       sh 'npm install'
-          //      sh 'npm run build'
-         //   }
-       // }
+    stages {
+        stage('Build') {
+            steps {
+                sh 'npm install'
+                //sh 'npm run build'
+            }
+        }
 
        // stage('Test') {
          //   steps {
-       //         sh 'npm run test' // Assurez-vous que les tests sont définis dans le fichier package.json
-      //      }
-     //   }
+           //     sh 'npm run test' // Assurez-vous que les tests sont définis dans le fichier package.json
+           // }
+       // }
 
         stage('Code Analysis with SonarQube') {
             steps {
@@ -84,3 +84,4 @@ pipeline {
         }
     }
 }
+
