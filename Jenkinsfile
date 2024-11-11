@@ -1,15 +1,14 @@
- def COLOR_MAP = [
-            'SUCCESS': 'good',
-            'FAILURE': 'danger'
-        ]
 pipeline {
     agent any
 
     environment {
-        registry = "manatsoadavid/front" // Nom de l'image Docker
-        registryCredential = 'dockerhub' // ID des credentials Docker Hub dans Jenkins
+        //registry = "manatsoadavid/back" // Nom de l'image Docker
+        //registryCredential = 'dockerhub' // ID des credentials Docker Hub dans Jenkins
         scannerHome = tool 'sonar4.7' // Configurez le scanner SonarQube dans Jenkins
-       
+        COLOR_MAP = [
+            'SUCCESS': 'good',
+            'FAILURE': 'danger'
+        ]
     }
 
     tools {
@@ -20,22 +19,22 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'npm install'
-                //sh 'npm run build'
+                sh 'npm run build'
             }
         }
 
-       // stage('Test') {
-         //   steps {
-           //     sh 'npm run test' // Assurez-vous que les tests sont définis dans le fichier package.json
-           // }
-       // }
+        stage('Test') {
+            steps {
+                sh 'npm run test' // Assurez-vous que les tests sont définis dans le fichier package.json
+            }
+        }
 
         stage('Code Analysis with SonarQube') {
             steps {
                 withSonarQubeEnv('sonar') { // Assurez-vous que 'sonar' est configuré dans Jenkins
                     sh '''${scannerHome}/bin/sonar-scanner \
-                    -Dsonar.projectKey=natik-project-key \
-                    -Dsonar.projectName=natik-project \
+                    -Dsonar.projectKey=natik-back-key \
+                    -Dsonar.projectName=natik-back \
                     -Dsonar.language=ts \
                     -Dsonar.sources=. \
                     -Dsonar.exclusions=node_modules/**,dist/** \
@@ -45,29 +44,29 @@ pipeline {
             }
         }
 
-        stage('Push Docker Image') {
-            steps {
-                script {
-                    def dockerImage = docker.build("${registry}:version${BUILD_NUMBER}")
-                    docker.withRegistry('', registryCredential) {
-                        dockerImage.push("version${BUILD_NUMBER}")
-                    }
-                }
-            }
-        }
+        //stage('Push Docker Image') {
+         //   steps {
+             //   script {
+               //     def dockerImage = docker.build("${registry}:version${BUILD_NUMBER}")
+               //     docker.withRegistry('', registryCredential) {
+                 //       dockerImage.push("version${BUILD_NUMBER}")
+                 //   }
+                //}
+            //}
+        //}
 
-        stage('Remove Local Docker Image') {
-            steps {
-                sh "docker rmi ${registry}:version${BUILD_NUMBER}"
-            }
-        }
+        //stage('Remove Local Docker Image') {
+            //steps {
+                //sh "docker rmi ${registry}:version${BUILD_NUMBER}"
+            //}
+        //}
 
-        stage('Deploy') {
-            agent { label 'kubernetes' }
-            steps {
-                sh "helm upgrade --install --force mychart /home/ramihone/front/frontendchart --set appimage=${registry}:version${BUILD_NUMBER}"
-            }
-        }
+        //stage('Deploy') {
+            //agent { label 'kubernetes' }
+            //steps {
+              //  sh "helm upgrade --install --force mychart /home/ramihone/back/backendchart --set appimageback=${registry}:version${BUILD_NUMBER}"
+            //}
+       // }
     }
 
     post {
@@ -84,4 +83,3 @@ pipeline {
         }
     }
 }
-
