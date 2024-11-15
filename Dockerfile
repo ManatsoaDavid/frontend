@@ -1,5 +1,5 @@
-# Utiliser l'image Node.js officielle pour construire le frontend React
-FROM node:20-alpine AS build
+# Utiliser l'image Node.js officielle pour construire et exécuter le frontend React
+FROM node:20-alpine
 
 # Créer et définir le répertoire de travail
 WORKDIR /app
@@ -13,17 +13,10 @@ RUN npm install
 # Copier le reste des fichiers source dans le conteneur
 COPY . .
 
-# Construire l'application en mode production
-RUN npm run build
+# Construire l'application
 
-# Utiliser une image Nginx pour servir l'application construite
-FROM nginx:stable-alpine
+# Exposer le port sur lequel votre application écoute
+EXPOSE 3000
 
-# Copier les fichiers de construction dans le répertoire par défaut de Nginx
-COPY --from=build /app/build /usr/share/nginx/html
-
-# Exposer le port 80 pour le frontend
-EXPOSE 80
-
-# Lancer Nginx
-CMD ["nginx", "-g", "daemon off;"]
+# Lancer l'application
+CMD ["npm", "start"]
