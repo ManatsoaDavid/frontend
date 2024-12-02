@@ -25,7 +25,7 @@ pipeline {
         }
 
         // stage('Test') {
-        // a     steps {
+        //     steps {
         //         sh 'npm run test' // Assurez-vous que les tests sont définis dans le fichier package.json
         //     }
         // }
