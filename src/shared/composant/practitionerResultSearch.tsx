@@ -6,7 +6,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { IPractitionerWithUser } from 'shared/models/practitioner.model';
 import { useAppSelector } from 'store/hooks';
 import { localStorageService } from 'utils/localStorageService';
-import NavbarVisitor from 'visiteur/layout/navbar';
+// import NavbarVisitor from 'visiteur/layout/navbar';
 import PractitionerAvailability from './practitionerAvailability';
 import SearchBarInResult from './searchBarInResult';
 
@@ -62,7 +62,7 @@ const PractitionerResults: React.FC = () => {
   return (
 
     <div>
-      {token ? <NavbarVisitor /> : <Navbar />}
+      {/* {token ? <NavbarVisitor /> : <Navbar />} */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <SearchBarInResult />
         <div className="mb-8">
