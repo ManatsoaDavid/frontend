@@ -69,7 +69,7 @@ pipeline {
          //    steps {
           //       sh "docker rmi ${registry}:version${BUILD_NUMBER}"
            //  }
-        // }
+        // }x
 
       //   stage('Deploy') {
          //    agent { label 'kubernetes' }
