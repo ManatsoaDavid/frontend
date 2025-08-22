@@ -54,29 +54,29 @@ pipeline {
             }
         }
 
-         stage('Push Docker Image') {
-             steps {
-                 script {
-                     def dockerImage = docker.build("${registry}:version${BUILD_NUMBER}")
-                     docker.withRegistry('', registryCredential) {
-                         dockerImage.push("version${BUILD_NUMBER}")
-                     }
-                 }
-             }
-         }
+        // stage('Push Docker Image') {
+          //   steps {
+               //  script {
+                //     def dockerImage = docker.build("${registry}:version${BUILD_NUMBER}")
+                //     docker.withRegistry('', registryCredential) {
+                 //        dockerImage.push("version${BUILD_NUMBER}")
+                 //    }
+            //     }
+           //  }
+      //   }
 
-         stage('Remove Local Docker Image') {
-             steps {
-                 sh "docker rmi ${registry}:version${BUILD_NUMBER}"
-             }
-         }
+        // stage('Remove Local Docker Image') {
+        //     steps {
+        //         sh "docker rmi ${registry}:version${BUILD_NUMBER}"
+          //   }
+       //  }
 
-         stage('Deploy') {
-             agent { label 'kubernetes' }
-             steps {
-                    sh "helm upgrade --install --force mychart1 /home/ramihone/front/frontendchart/ --set appimage=${registry}:version${BUILD_NUMBER}"
-             }
-         }
+       //  stage('Deploy') {
+       //      agent { label 'kubernetes' }
+       //      steps {
+        //            sh "helm upgrade --install --force mychart1 /home/ramihone/front/frontendchart/ --set appimage=${registry}:version${BUILD_NUMBER}"
+        //     }
+       //  }
     } // <- Fermeture correcte du bloc stages
 
     post {
