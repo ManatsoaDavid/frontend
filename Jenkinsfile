@@ -54,16 +54,16 @@ pipeline {
             }
         }
 
-        // stage('Push Docker Image') {
-          //   steps {
-               //  script {
-                //     def dockerImage = docker.build("${registry}:version${BUILD_NUMBER}")
-                //     docker.withRegistry('', registryCredential) {
-                 //        dockerImage.push("version${BUILD_NUMBER}")
-                 //    }
-            //     }
-           //  }
-      //   }
+         stage('Push Docker Image') {
+             steps {
+                 script {
+                     def dockerImage = docker.build("${registry}:version${BUILD_NUMBER}")
+                     docker.withRegistry('', registryCredential) {
+                         dockerImage.push("version${BUILD_NUMBER}")
+                     }
+                 }
+             }
+         }
 
         // stage('Remove Local Docker Image') {
         //     steps {
